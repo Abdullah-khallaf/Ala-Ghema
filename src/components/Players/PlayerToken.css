@@ -1,0 +1,54 @@
+.player-token {
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  line-height: 1;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  transition: all 0.5s ease;
+}
+
+.player-token.player-1 {
+  background: rgba(107, 141, 255, 0.2);
+  border: 2px solid #6b8dff;
+  box-shadow: 0 0 8px rgba(107, 141, 255, 0.3);
+}
+
+.player-token.player-2 {
+  background: rgba(255, 133, 161, 0.2);
+  border: 2px solid #ff85a1;
+  box-shadow: 0 0 8px rgba(255, 133, 161, 0.3);
+}
+
+/* Animation for token movement */
+@keyframes tokenMove {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.player-token.moving {
+  animation: tokenMove 0.5s ease;
+}
+
+/* Stacked tokens (both players on same square) */
+.square-wrapper:has(.player-1) .player-2 {
+  transform: translate(calc(-50% + 8px), calc(-50% + 8px));
+}
+
+.square-wrapper:has(.player-2) .player-1 {
+  transform: translate(calc(-50% - 8px), calc(-50% - 8px));
+}

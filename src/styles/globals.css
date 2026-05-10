@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Pacifico&display=swap');
+
+:root {
+  --font-title: 'Pacifico', cursive;
+  --font-body: 'Cairo', sans-serif;
+
+  --color-bg: #f0f6ff;
+  --color-board-bg: #ffffff;
+  --color-square-default: #ffffff;
+  --color-square-border: #c8d8f0;
+  --color-yellow: #ffe566;
+  --color-red: #ff5252;
+  --color-player1: #6b8dff;
+  --color-player2: #ff85a1;
+  --color-admin-accent: #7c5cbf;
+  --color-text-primary: #2d2d5b;
+  --color-text-muted: #8899bb;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: linear-gradient(135deg, var(--color-bg) 0%, #ffffff 100%);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(107, 141, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-player1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-admin-accent);
+}
+
+/* RTL adjustments */
+[dir='rtl'] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir='rtl'] *:not(textarea) {
+  direction: rtl;
+}
+
+/* Selection color */
+::selection {
+  background: var(--color-player1);
+  color: white;
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid var(--color-player1);
+  outline-offset: 2px;
+}

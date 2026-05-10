@@ -1,0 +1,152 @@
+.question-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.question-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+  direction: rtl;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.question-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #e0e8f0;
+  padding-bottom: 1rem;
+}
+
+.question-header h2 {
+  font-family: 'Cairo', sans-serif;
+  color: #2d2d5b;
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.question-player {
+  font-family: 'Cairo', sans-serif;
+  color: #8899bb;
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.question-body {
+  margin-bottom: 2rem;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.question-text {
+  font-family: 'Cairo', sans-serif;
+  color: #2d2d5b;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
+  text-align: right;
+}
+
+.question-footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn-answer,
+.btn-skip {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  font-family: 'Cairo', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-answer {
+  background: #10b981;
+  color: white;
+}
+
+.btn-answer:hover {
+  background: #059669;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-answer:active {
+  transform: scale(0.95);
+}
+
+.btn-skip {
+  background: #f3f4f6;
+  color: #2d2d5b;
+}
+
+.btn-skip:hover {
+  background: #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-skip:active {
+  transform: scale(0.95);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .question-modal {
+    padding: 1.5rem;
+  }
+
+  .question-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .question-text {
+    font-size: 1rem;
+  }
+
+  .btn-answer,
+  .btn-skip {
+    padding: 0.65rem 1rem;
+    font-size: 0.95rem;
+  }
+}
