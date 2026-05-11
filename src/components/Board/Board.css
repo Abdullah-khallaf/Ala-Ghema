@@ -183,7 +183,7 @@
 .board {
   grid-template-columns: repeat(4, 1fr) !important;
   grid-template-rows: repeat(5, 1fr) !important;
-  max-width: 400px !important;
+  max-width: 800px !important;
 }
 
 /* Jump square info (arrow + partner number) */
