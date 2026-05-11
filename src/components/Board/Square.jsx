@@ -1,31 +1,21 @@
 import React from 'react';
 import './Board.css';
 
-/**
- * Square Component
- * Props:
- * - number: square number (1-20)
- * - isJump: true if yellow (jump/snake-ladder square)
- * - hasQuestion: true if question assigned to this square
- * - isImportant: true if the question is marked important (shown as danger square)
- * - isAnsweredByBoth: true if both players have answered
- * - players: array of player IDs currently on this square ['P1', 'P2']
- */
 export function Square({
   number,
   isJump,
-  hasQuestion,
+  jumpType,
+  partnerSquare,
   isImportant,
+  hasQuestion,
   isAnsweredByBoth,
   players,
 }) {
-  // Build class list
   const classes = ['square'];
 
   if (isJump) {
     classes.push('square-jump');
   } else if (isImportant) {
-    // Important question squares look "dangerous" — visible before landing
     classes.push('square-important');
   } else if (hasQuestion && !isAnsweredByBoth) {
     classes.push('square-unanswered-question');
@@ -39,21 +29,27 @@ export function Square({
     <div className={classes.join(' ')}>
       <div className="square-number">{number}</div>
 
-      {/* Icon row */}
       {isJump && (
-        <div className="square-question-icon">🔀</div>
+        <div className="square-jump-info">
+          <span className="square-jump-arrow">
+            {jumpType === 'up' ? '⬆️' : '⬇️'}
+          </span>
+          <span className="square-jump-partner">{partnerSquare}</span>
+        </div>
       )}
-      {!isJump && isImportant && !isAnsweredByBoth && (
+
+      {isImportant && !isJump && (
         <div className="square-important-icon">⚠️</div>
       )}
+
       {!isJump && !isImportant && hasQuestion && !isAnsweredByBoth && (
         <div className="square-question-icon">❓</div>
       )}
-      {!isJump && hasQuestion && isAnsweredByBoth && (
+
+      {hasQuestion && isAnsweredByBoth && (
         <div className="square-answered-icon">✓</div>
       )}
 
-      {/* Player tokens */}
       {players.length > 0 && (
         <div className="square-players">
           {players.includes('P1') && (

@@ -1,111 +1,59 @@
-import { JUMP_SQUARES } from '../constants/board';
 import { shuffleArray } from './shuffle';
+import { JUMP_SQUARES, IMPORTANT_SQUARES } from '../constants/board';
 
 /**
- * Board Helper Functions
- */
-
-/**
- * Assign questions to random non-jump squares
- * @param {Array} questions - Array of question objects
- * @returns {Array} - Questions with squareIndex assigned
+ * Assigns questions to squares on the board.
+ *
+ * Rules:
+ * - Important questions → assigned only to IMPORTANT_SQUARES (red squares)
+ * - Normal questions → assigned to remaining non-jump, non-important squares
+ * - Yellow (jump) squares never get questions assigned directly
+ *   (they show the destination square's question instead)
+ * - Questions are randomly shuffled before assignment
  */
 export function assignQuestionsToSquares(questions) {
-  const availableSquares = Array.from({ length: 20 }, (_, i) => i + 1).filter(
-    (sq) => !JUMP_SQUARES.includes(sq)
+  const importantQuestions = shuffleArray(
+    questions.filter((q) => q.isImportant)
+  );
+  const normalQuestions = shuffleArray(
+    questions.filter((q) => !q.isImportant)
   );
 
-  const shuffledSquares = shuffleArray([...availableSquares]);
+  // Available red squares for important questions
+  const availableImportantSquares = shuffleArray([...IMPORTANT_SQUARES]);
 
-  return questions.map((question, index) => ({
-    ...question,
-    squareIndex: shuffledSquares[index] || null,
-  }));
-}
-
-/**
- * Get question at a specific square
- * @param {number} squareIndex - Square number (1-20)
- * @param {Array} questions - Array of question objects
- * @returns {Object|null} - Question object or null
- */
-export function getQuestionAtSquare(squareIndex, questions) {
-  return (
-    questions.find((q) => q.squareIndex === squareIndex) || null
+  // Available normal squares (exclude yellow and red)
+  const allSquares = Array.from({ length: 20 }, (_, i) => i + 1);
+  const availableNormalSquares = shuffleArray(
+    allSquares.filter(
+      (sq) => !JUMP_SQUARES.includes(sq) && !IMPORTANT_SQUARES.includes(sq)
+    )
   );
+
+  const assigned = [];
+
+  // Assign important questions to red squares
+  importantQuestions.forEach((q, i) => {
+    assigned.push({
+      ...q,
+      squareIndex: availableImportantSquares[i] ?? null,
+    });
+  });
+
+  // Assign normal questions to normal squares
+  normalQuestions.forEach((q, i) => {
+    assigned.push({
+      ...q,
+      squareIndex: availableNormalSquares[i] ?? null,
+    });
+  });
+
+  return assigned;
 }
 
 /**
- * Get all questions answered by a specific player
- * @param {string} playerId - 'P1' or 'P2'
- * @param {Array} questions - Array of question objects
- * @returns {Array} - Array of questions answered by player
+ * Get question for a specific square
  */
-export function getQuestionsAnsweredByPlayer(playerId, questions) {
-  return questions.filter((q) => q.answeredBy.includes(playerId));
-}
-
-/**
- * Get all questions not yet answered
- * @param {Array} questions - Array of question objects
- * @returns {Array} - Array of unanswered questions
- */
-export function getUnansweredQuestions(questions) {
-  return questions.filter((q) => q.answeredBy.length === 0);
-}
-
-/**
- * Get all important questions
- * @param {Array} questions - Array of question objects
- * @returns {Array} - Array of important questions
- */
-export function getImportantQuestions(questions) {
-  return questions.filter((q) => q.isImportant);
-}
-
-/**
- * Check if a question has been fully answered (both players)
- * @param {Object} question - Question object
- * @returns {boolean}
- */
-export function isQuestionFullyAnswered(question) {
-  return question.answeredBy.length >= 2;
-}
-
-/**
- * Get board grid position for a square number
- * @param {number} squareNumber - Square number (1-20)
- * @returns {Object} - { row, col } position
- */
-export function getSquarePosition(squareNumber) {
-  const BOARD_LAYOUT = [
-    [1, 2, 3, 4, 5],
-    [10, 9, 8, 7, 6],
-    [11, 12, 13, 14, 15],
-    [20, 19, 18, 17, 16],
-  ];
-
-  for (let row = 0; row < BOARD_LAYOUT.length; row++) {
-    for (let col = 0; col < BOARD_LAYOUT[row].length; col++) {
-      if (BOARD_LAYOUT[row][col] === squareNumber) {
-        return { row, col };
-      }
-    }
-  }
-  return null;
-}
-
-/**
- * Convert row/col to CSS grid position
- * @param {number} row - Row index (0-3)
- * @param {number} col - Column index (0-4)
- * @returns {Object} - { gridArea } for CSS Grid
- */
-export function getGridArea(row, col) {
-  // CSS Grid is 1-indexed
-  const gridRow = row + 1;
-  const gridCol = col + 1;
-  return {
-    gridArea: `${gridRow} / ${gridCol}`,
-  };
+export function getQuestionForSquare(questions, squareNumber) {
+  return questions.find((q) => q.squareIndex === squareNumber) || null;
 }

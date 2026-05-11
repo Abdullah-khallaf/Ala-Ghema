@@ -178,3 +178,48 @@
     font-size: 1.3rem;
   }
 }
+
+/* 4 columns x 5 rows override */
+.board {
+  grid-template-columns: repeat(4, 1fr) !important;
+  grid-template-rows: repeat(5, 1fr) !important;
+  max-width: 400px !important;
+}
+
+/* Jump square info (arrow + partner number) */
+.square-jump-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.square-jump-arrow {
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.square-jump-partner {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #d48806;
+  background: rgba(255,255,255,0.6);
+  border-radius: 4px;
+  padding: 0 3px;
+}
+
+/* Important square (red danger) */
+.square-important {
+  background: #fff0f0 !important;
+  border-color: #ff5252 !important;
+  border-width: 2.5px !important;
+}
+
+.square-important .square-number {
+  color: #cc0000 !important;
+}
+
+.square-important-icon {
+  font-size: 0.9rem;
+  animation: pulse 1.5s infinite;
+}
